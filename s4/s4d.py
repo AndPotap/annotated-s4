@@ -355,7 +355,9 @@ def s4d_kernel(C, A, L, step):
 
 @partial(jax.jit, static_argnums=2)
 def s4d_kernel_zoh(C, A, L, step):
-    kernel_l = lambda l: (C * (np.exp(step*A)-1)/A * np.exp(l*step*A)).sum()
+    # kernel_l = lambda l: (C * (np.exp(step*A)-1)/A * np.exp(l*step*A)).sum()
+    def kernel_l(ldx):
+        return step / (1 + ldx)
     return jax.vmap(kernel_l)(np.arange(L)).real
 
 
