@@ -210,19 +210,19 @@ class SequenceBlock(nn.Module):
         )
 
     def __call__(self, x):
-        skip = x
-        if self.prenorm:
-            x = self.norm(x)
-        x = self.seq(x)
-        x = self.drop(nn.gelu(x))
-        if self.glu:
-            x = self.out(x) * jax.nn.sigmoid(self.out2(x))
-        else:
-            x = self.out(x)
-        x = skip + self.drop(x)
-        if not self.prenorm:
-            x = self.norm(x)
-        # x = x + self.out(nn.gelu(self.seq(x)))
+        # skip = x
+        # if self.prenorm:
+        #     x = self.norm(x)
+        # x = self.seq(x)
+        # x = self.drop(nn.gelu(x))
+        # if self.glu:
+        #     x = self.out(x) * jax.nn.sigmoid(self.out2(x))
+        # else:
+        #     x = self.out(x)
+        # x = skip + self.drop(x)
+        # if not self.prenorm:
+        #     x = self.norm(x)
+        x = x + self.out(nn.gelu(self.seq(x)))
         return x
 
 
