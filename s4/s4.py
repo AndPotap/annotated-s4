@@ -529,6 +529,7 @@ class SequenceBlock(nn.Module):
         x = skip + self.drop(x)
         if not self.prenorm:
             x = self.norm(x)
+        # x = x + self.out(nn.gelu(self.seq(x)))
         return x
 
 
